@@ -1,7 +1,7 @@
-SipHash in C
+SipHash in C++11
 ====
 
-A pure C implementation of [SipHash-2-4](https://131002.net/siphash/),
+A header-only C++11 implementation of [SipHash-2-4](https://131002.net/siphash/),
 a fast short-input
 [PRF](https://en.wikipedia.org/wiki/Pseudorandom_function) with a
 128-bit key and 64-bit output.
@@ -29,35 +29,22 @@ Introductory blog post: https://idea.popcount.org/2013-01-24-siphash/
 installation
 ---
 
-Copy `csiphash.c` to your code directory and add the declaration
-somewhere:
-
-```c
-uint64_t siphash24(const void *src,
-                   unsigned long src_sz,
-                   const char k[16]);
-```
-
+Copy `siphash.hpp` to your code directory, or add to include path.
 
 usage
 ---
 
 Shortest program:
 
-```c
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
-
-uint64_t siphash24(const void *src,
-                   unsigned long src_sz,
-                   const char key[16]);
+```c++
+#include <iostream>
+#include "siphash.hpp"
 
 int main() {
-    char key[16] = {0,1,2,3,4,5,6,7,8,9,0xa,0xb,0xc,0xd,0xe,0xf};
-    char *pt = "hello world!";
-    uint64_t hash = siphash24(pt, strlen(pt), key);
-    printf("plaintext=%s hash=%llu\n", pt, hash);
+    siphash::Key key = {0,1,2,3,4,5,6,7,8,9,0xa,0xb,0xc,0xd,0xe,0xf};
+    char pt[] = "hello world!";
+    std::uint64_t hash = siphash::siphash24(pt, key);
+    std::cout << "plaintext=" << pt << " hash=" << hash << std::endl;
     return 0;
 }
 ```
@@ -73,4 +60,4 @@ Type `make`:
 license
 ----
 
-This code is released under the MIT License, the full text of which can be found is in the header of [`csiphash.c`](https://github.com/majek/csiphash/blob/master/csiphash.c).
+This code is released under the MIT License, the full text of which can be found is in the header of [`siphash.hpp`](https://github.com/melver/cppsiphash/blob/master/siphash.hpp).

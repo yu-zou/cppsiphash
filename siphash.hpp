@@ -25,7 +25,7 @@
     https://github.com/melver/cppsiphash/
 
  Solution inspired by code from:
-    Marek Majkowski https://github.com/majek/csiphash/
+    Marek Majkowski (https://github.com/majek/csiphash/)
     Samuel Neves (supercop/crypto_auth/siphash24/little)
     djb (supercop/crypto_auth/siphash24/little2)
     Jean-Philippe Aumasson (https://131002.net/siphash/siphash24.c)
@@ -72,7 +72,7 @@ inline std::uint64_t sip_rotate(const std::uint64_t x)
 	return ((x) << (b)) | ( (x) >> (64 - (b)));
 }
 
-template <std::uint64_t s, const std::uint64_t t>
+template <std::uint64_t s, std::uint64_t t>
 inline void sip_half_round(
 		std::uint64_t& a,
 		std::uint64_t& b,

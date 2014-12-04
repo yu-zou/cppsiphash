@@ -38,7 +38,7 @@ uint64_t vectors[64] = {
 
 int main() {
 	int i;
-	siphash::Key key = {{0,1,2,3,4,5,6,7,8,9,0xa,0xb,0xc,0xd,0xe,0xf}};
+	siphash::Key key = {0,1,2,3,4,5,6,7,8,9,0xa,0xb,0xc,0xd,0xe,0xf};
 	char plaintext[64];
 	for (i=0; i<64; i++) plaintext[i] = i;
 

@@ -34,7 +34,7 @@
 #ifndef SIPHASH_HPP_
 #define SIPHASH_HPP_
 
-#include <cstdint> // C++11
+#include <cstdint>
 #include <cstddef>
 
 #if defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__) && \
@@ -97,19 +97,26 @@ inline void sip_double_round(
 	sip_half_round<17,21>(v2,v1,v0,v3);
 }
 
-union Key {
-	char key[16];
-
-	struct {
-		std::uint64_t k0;
-		std::uint64_t k1;
+struct Key {
+	union {
+		char          k_char[16];
+		std::uint64_t k_uint64[2];
 	};
+
+	Key(char k0, char k1, char k2, char k3, char k4, char k5, char k6, char k7,
+		char k8, char k9, char ka, char kb, char kc, char kd, char ke, char kf)
+		: k_char{k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, ka, kb, kc, kd, ke, kf}
+	{}
+
+	Key(std::uint64_t k0, std::uint64_t k1)
+		: k_uint64{k0, k1}
+	{}
 };
 
 inline std::uint64_t siphash24(const void *src, std::size_t len, const Key *key)
 {
-	const std::uint64_t k0 = _le64toh(key->k0);
-	const std::uint64_t k1 = _le64toh(key->k1);
+	const std::uint64_t k0 = _le64toh(key->k_uint64[0]);
+	const std::uint64_t k1 = _le64toh(key->k_uint64[1]);
 	const std::uint64_t *in = static_cast<const std::uint64_t*>(src);
 
 	std::uint64_t b = static_cast<std::uint64_t>(len) << 56;
